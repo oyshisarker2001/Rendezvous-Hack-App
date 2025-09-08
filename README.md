@@ -59,7 +59,7 @@ All of these components are possible to run in Docker containers, but for this g
 See our Docker guide for more details on how to run Coral in Docker: [Coral Docker Guide](./docker-guide.md)
 
 ## Note on Windows
-If you're on Windows, you may need to use Git Bash or WSL (Windows Subsystem for Linux) to run the commands in this guide. PowerShell may not work correctly with some of the commands.
+If you're on Windows, you may need to use WSL (Windows Subsystem for Linux) to run the commands in this guide. PowerShell may not work correctly with some of the commands.
 
 WSL 2 works, but WSL1 performs better.
 
