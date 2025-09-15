@@ -72,14 +72,12 @@ This repository contains everything you need to run a complete multi-agent syste
 ```
 MultiAgent-Quickstart/
 ├── coral-server/          # Coral Server source code
-├── coral-studio/          # Coral Studio UI source code
 ├── agents/                # Pre-configured agents
 │   ├── github/           # GitHub integration agent
 │   ├── firecrawl/        # Web scraping agent
 │   └── interface/        # User interface agent
 ├── check-dependencies.sh  # Dependency verification script
 ├── start-server.sh       # Server startup script
-├── start-studio.sh       # Studio startup script
 └── application.yaml      # Configuration file
 ```
 
@@ -97,7 +95,7 @@ MultiAgent-Quickstart/
 
 3. **Start Coral Studio** (in another terminal):
    ```bash
-   ./start-studio.sh
+   npx @coral-protocol/coral-studio
    ```
 
 That's it! You now have a complete multi-agent system running locally.
@@ -130,18 +128,11 @@ The server acts as a control plane that manages networks of agents and facilitat
 
 **Coral Studio** is a web-based UI for managing sessions, agents, and threads visually.
 
-### Using the Start Script
-
-We've provided a convenient script to start Coral Studio:
+### Using npx
 
 ```bash
-./start-studio.sh
+npx @coral-protocol/coral-studio
 ```
-
-This script will:
-- Navigate to the `coral-studio` directory
-- Install all necessary dependencies with `yarn install`
-- Start the development server with `yarn dev`
 
 The Studio UI will be available at [`http://127.0.0.1:5173`](http://127.0.0.1:5173)
 
@@ -201,7 +192,7 @@ Now we pick our agents:
     - For GitHub, see [this guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) (make sure to *only* allow read-only permissions!)
 - For the 'interface' agent specifically, we need to add the user input custom tools:
     - Go to the 'Custom Tools' section, and in the dropdown, select both 'request-question' and 'answer-question'
- 
+
     ![custom tools dropdown](images/add-custom-tools.png)
 - Repeat for the other 2 agents ('github' & 'firecrawl')
 
@@ -312,7 +303,7 @@ Coral Studio is filling in for the interface a production application would have
   }
 }
 ```
-Note the `"tools"` object. 
+Note the `"tools"` object.
 
 Since the agents are being made with an environment variable pointing to their personal MCP server address on their Coral server, other tools are also possible to be brought in for individual agents.
 
@@ -367,7 +358,7 @@ In production, you would typically have a backend service that manages sessions 
 Coral imposes no restrictions on how you implement your backend, so you can use any language or framework you're comfortable with. It just needs to make HTTP requests to a Coral Server's endpoints.
 
 At deployment time, the coral server needs to be deployed alongside your backend service, and the backend service needs to be able to connect to it. With Kubernetes, this means adding a Service to your cluster that points to the Coral Server pod. Coral Server instances for your application should not be exposed to the public internet, as they are not meant to be directly interacted with by users.
-The Coral Server will also need a Docker socket to run agents in containers, so you will need to mount a Docker socket into the Coral Server pod. 
+The Coral Server will also need a Docker socket to run agents in containers, so you will need to mount a Docker socket into the Coral Server pod.
 
 A Kubernetes runtime is in development along with other convenient runtime options, so keep an eye on the [Coral Server GitHub](https://github.com/Coral-Protocol/coral-server).
 
