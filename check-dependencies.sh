@@ -23,11 +23,11 @@ C_NC='\033[0m' # No Color
 version_compare() {
     local version1=$1
     local version2=$2
-    
+
     # Convert versions to comparable format (remove non-numeric characters except dots)
     version1=$(echo "$version1" | sed 's/[^0-9.]//g')
     version2=$(echo "$version2" | sed 's/[^0-9.]//g')
-    
+
     # Cross-platform version comparison
     # First try sort -V (GNU coreutils), fallback to manual comparison
     if printf '%s\n%s\n' "$version2" "$version1" | sort -V -C 2>/dev/null; then
@@ -44,24 +44,24 @@ version_compare() {
         # Split versions into arrays and compare numerically
         IFS='.' read -ra ver1_parts <<< "$version1"
         IFS='.' read -ra ver2_parts <<< "$version2"
-        
+
         # Pad arrays to same length
         local max_len=${#ver1_parts[@]}
         if [ ${#ver2_parts[@]} -gt $max_len ]; then
             max_len=${#ver2_parts[@]}
         fi
-        
+
         for ((i=0; i<max_len; i++)); do
             local v1=${ver1_parts[i]:-0}
             local v2=${ver2_parts[i]:-0}
-            
+
             if [ "$v1" -gt "$v2" ]; then
                 return 0  # version1 > version2
             elif [ "$v1" -lt "$v2" ]; then
                 return 1  # version1 < version2
             fi
         done
-        
+
         return 0  # versions are equal
     fi
 }
@@ -72,10 +72,10 @@ check_python() {
         echo -e "${C_RED}  [✗] Python 3 is not installed.${C_NC}"
         return 1
     fi
-    
+
     local python_version=$(python3 --version 2>&1 | cut -d' ' -f2)
     local required_version="3.10"
-    
+
     if version_compare "$python_version" "$required_version"; then
         echo -e "${C_GREEN}  [✓] Python $python_version (required: $required_version+)${C_NC}"
         return 0
@@ -91,10 +91,10 @@ check_node() {
         echo -e "${C_RED}  [✗] Node.js is not installed.${C_NC}"
         return 1
     fi
-    
+
     local node_version=$(node --version 2>&1 | sed 's/v//')
     local required_version="18.0"
-    
+
     if version_compare "$node_version" "$required_version"; then
         echo -e "${C_GREEN}  [✓] Node.js $node_version (required: 18+)${C_NC}"
         return 0
@@ -110,21 +110,9 @@ check_npm() {
         echo -e "${C_RED}  [✗] npm is not installed.${C_NC}"
         return 1
     fi
-    
+
     local npm_version=$(npm --version 2>&1)
     echo -e "${C_GREEN}  [✓] npm $npm_version (bundled with Node.js)${C_NC}"
-    return 0
-}
-
-# Function to check yarn
-check_yarn() {
-    if ! command -v yarn &> /dev/null; then
-        echo -e "${C_RED}  [✗] yarn is not installed.${C_NC}"
-        return 1
-    fi
-    
-    local yarn_version=$(yarn --version 2>&1)
-    echo -e "${C_GREEN}  [✓] yarn $yarn_version${C_NC}"
     return 0
 }
 
@@ -134,11 +122,11 @@ check_java() {
         echo -e "${C_RED}  [✗] Java is not installed.${C_NC}"
         return 1
     fi
-    
+
     # Get Java version (handle different output formats)
     local java_version_output=$(java -version 2>&1 | head -n 1)
     local java_version
-    
+
     if [[ $java_version_output =~ \"([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
         # Old format like "1.8.0_XXX"
         java_version="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}"
@@ -155,9 +143,9 @@ check_java() {
         echo -e "${C_YELLOW}  [!] Java version format not recognized: $java_version_output${C_NC}"
         return 0  # Assume it's okay if we can't parse it
     fi
-    
+
     local required_version="21"
-    
+
     if version_compare "$java_version" "$required_version"; then
         echo -e "${C_GREEN}  [✓] Java $java_version (required: $required_version+)${C_NC}"
         return 0
@@ -173,7 +161,7 @@ check_git() {
         echo -e "${C_RED}  [✗] Git is not installed.${C_NC}"
         return 1
     fi
-    
+
     local git_version=$(git --version 2>&1 | cut -d' ' -f3)
     echo -e "${C_GREEN}  [✓] Git $git_version (latest recommended)${C_NC}"
     return 0
@@ -185,11 +173,11 @@ check_uv() {
         echo -e "${C_YELLOW}  [!] uv is not installed.${C_NC}"
         echo -e "${C_YELLOW}Would you like to install uv automatically? (y/n): ${C_NC}"
         read -r response
-        
+
         if [[ "$response" =~ ^[Yy]$ ]]; then
             echo -e "${C_YELLOW}Installing uv...${C_NC}"
             curl -LsSf https://astral.sh/uv/install.sh | sh
-            
+
             # Source the shell profile to make uv available in current session
             # Try different possible locations for cargo env
             if [ -f "$HOME/.cargo/env" ]; then
@@ -197,7 +185,7 @@ check_uv() {
             elif [ -f "$HOME/.local/bin/uv" ]; then
                 export PATH="$HOME/.local/bin:$PATH"
             fi
-            
+
             # Verify installation
             if command -v "uv" &> /dev/null; then
                 local uv_version=$(uv --version 2>&1 | cut -d' ' -f2)
@@ -229,7 +217,6 @@ check_dependencies() {
     check_uv || missing_deps=1
     check_node || missing_deps=1
     check_npm || missing_deps=1
-    check_yarn || missing_deps=1
     check_git || missing_deps=1
     check_java || missing_deps=1
 
@@ -241,7 +228,6 @@ check_dependencies() {
         echo -e "  - ${C_YELLOW}uv (latest)${C_NC}: Run 'curl -LsSf https://astral.sh/uv/install.sh | sh'"
         echo -e "  - ${C_YELLOW}Node.js 18+${C_NC}: Install from nodejs.org or your package manager"
         echo -e "  - ${C_YELLOW}npm${C_NC}: Bundled with Node.js (install Node.js 18+)"
-        echo -e "  - ${C_YELLOW}yarn${C_NC}: Run 'npm install -g yarn' or install from yarnpkg.com"
         echo -e "  - ${C_YELLOW}Git (latest)${C_NC}: Install from git-scm.com or your package manager"
         echo -e "  - ${C_YELLOW}Java 21+${C_NC}: Install from your package manager or adoptium.net"
         echo -e "\n${C_BLUE}Additional requirements:${C_NC}"
@@ -262,7 +248,7 @@ main() {
     echo -e "${C_BLUE}=====================================${C_NC}"
     echo -e "${C_BLUE}   Coral Protocol Dependency Check   ${C_NC}"
     echo -e "${C_BLUE}=====================================${C_NC}\n"
-    
+
     check_dependencies
 }
 
