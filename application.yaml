@@ -28,7 +28,7 @@ registry:
         description: "What model temperature to use"
         default: "0.3"
       - name: "TIMEOUT_MS"
-        type: "number"
+        type: "string"
         description: "Connection/tool timeouts in ms"
         default: 60000
 
@@ -68,7 +68,7 @@ registry:
         description: "What model temperature to use"
         default: "0.3"
       - name: "TIMEOUT_MS"
-        type: "number"
+        type: "string"
         description: "Connection/tool timeouts in ms"
         default: 300
     runtime:
@@ -108,7 +108,7 @@ registry:
         description: "What model temperature to use"
         default: "0.3"
       - name: "TIMEOUT_MS"
-        type: "number"
+        type: "string"
         description: "Connection/tool timeouts in ms"
         default: 300
     runtime:
