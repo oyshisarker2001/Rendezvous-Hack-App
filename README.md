@@ -1,3 +1,9 @@
+# Disclaimer: Soon to be outdated
+
+With Coral's V1, this guide will be outdated. There is a migration guide [here](https://github.com/Coral-Protocol/coral-server/blob/feat/v1-staging/MIGRATING.md) (V1 is released when this branch is merged).
+
+An updated version of this document will be coming at a future point.
+
 # How to Build a Multi-Agent System with Awesome Open Source Agents using Coral Protocol
 
 This guide provides a step-by-step guide to build and run a complete **multi-agent system** using [Coral Protocol](https://github.com/Coral-Protocol), open-source agents, and Coral Studio so you can view all the interactions visually.
