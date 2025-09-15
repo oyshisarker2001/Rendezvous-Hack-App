@@ -94,7 +94,7 @@ MultiAgent-Quickstart/
 
 3. **Start Coral Studio** (in another terminal):
    ```bash
-   npx @coral-protocol/coral-studio
+   PORT=5173 npx @coral-protocol/coral-studio
    ```
 
 That's it! You now have a complete multi-agent system running locally.
@@ -130,7 +130,7 @@ The server acts as a control plane that manages networks of agents and facilitat
 ### Using npx
 
 ```bash
-npx @coral-protocol/coral-studio
+PORT=5173 npx @coral-protocol/coral-studio
 ```
 
 The Studio UI will be available at [`http://127.0.0.1:5173`](http://127.0.0.1:5173)
