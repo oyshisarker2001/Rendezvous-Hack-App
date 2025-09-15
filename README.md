@@ -40,7 +40,6 @@ This script will verify that you have all the required tools and versions instal
 | **uv** | latest | Python environment & dependency manager ([install guide](https://docs.astral.sh/uv/getting-started/installation/)). **Ensure it's installed globally, not as part of a specific python context.** |
 | **Node.js** | 18+ | Required to run Coral Studio (the UI)                       |
 | **npm** | latest | Bundled with Node.js, used for package management |
-| **yarn** | latest | Used to install and run Studio dependencies                 |
 | **Git** | latest | For version control and updates                              |
 | **Java** | 21+ | Required to run Coral Server                                |
 | **OpenAI API Key** | Any | Needed for agents using OpenAI models (GPT)                 |
