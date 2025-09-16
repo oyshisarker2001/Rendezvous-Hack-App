@@ -1,8 +1,10 @@
-# Disclaimer: Soon to be outdated
+# Disclaimer: outdated
 
-With Coral's V1, this guide will be outdated. There is a migration guide [here](https://github.com/Coral-Protocol/coral-server/blob/feat/v1-staging/MIGRATING.md) (V1 is released when this branch is merged).
+With Coral's V1, this guide is outdated. There is a migration guide [here](https://github.com/Coral-Protocol/coral-server/blob/feat/v1-staging/MIGRATING.md)
 
 An updated version of this document will be coming at a future point.
+
+Also, you can see a working example app with agents [here](https://github.com/Coral-Protocol/coral-example-app) (It is all in Rust)
 
 # How to Build a Multi-Agent System with Awesome Open Source Agents using Coral Protocol
 
