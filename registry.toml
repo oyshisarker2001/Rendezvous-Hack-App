@@ -1,0 +1,10 @@
+# registry.toml
+
+[[local-agent]]
+path = "agents/Coral-Interface-Agent"
+
+[[local-agent]]
+path = "agents/Coral-OpenDeepResearch-Agent"
+
+[[local-agent]]
+path = "agents/Coral-FirecrawlIMCP-Agent"
