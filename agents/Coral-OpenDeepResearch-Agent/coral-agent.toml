@@ -1,0 +1,34 @@
+[agent]
+name = "opendeepresearch_agent"
+version = "0.0.1"
+
+[options.OPENAI_API_KEY]
+type = "string"
+description = "OpenAI API key used by the research agent"
+
+[options.LINKUP_API_KEY]
+type = "string"
+description = "Linkup API key (optional)"
+
+[options.MODEL_NAME]
+type = "string"
+description = "Model to use (e.g. 'gpt-4.1-mini')"
+default = "gpt-4.1-mini"
+
+[options.MODEL_PROVIDER]
+type = "string"
+description = "Model provider (e.g. 'openai', 'groq')"
+default = "openai"
+
+[options.MODEL_MAX_TOKENS]
+type = "string"
+description = "Maximum number of tokens"
+default = "16000"
+
+[options.MODEL_TEMPERATURE]
+type = "string"
+description = "Model sampling temperature"
+default = "0.3"
+
+[runtimes.executable]
+command = ["bash", "-c", "../agents/Coral-OpenDeepResearch-Agent/run_agent.sh ../agents/Coral-OpenDeepResearch-Agent/main.py"]
